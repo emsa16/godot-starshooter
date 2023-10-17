@@ -8,6 +8,12 @@ export (int) var damage = 1
 
 var input_vector = Vector2.ZERO
 
+var Laser = preload("res://projectiles/PlayerLaser.tscn")
+
+onready var muzzle = $Muzzle
+
+signal spawn_laser(Laser, location)
+
 func _physics_process(delta):
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
@@ -17,6 +23,8 @@ func _physics_process(delta):
 	global_position.x = clamp(global_position.x, 0, 540)
 	global_position.y = clamp(global_position.y, 0, 960)
 
+	if Input.is_action_just_pressed("shoot"):
+		emit_signal("spawn_laser", Laser, muzzle.global_position)
 
 func _on_Player_area_entered(area):
 	if area.is_in_group("enemies"):
