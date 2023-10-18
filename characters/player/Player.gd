@@ -3,7 +3,7 @@ extends Area2D
 class_name Player
 
 export (int) var speed = 300
-export (int) var hp = 3
+export (int) var hp = 5
 export (int) var damage = 1
 
 var input_vector = Vector2.ZERO
@@ -13,6 +13,7 @@ var Laser = preload("res://projectiles/PlayerLaser.tscn")
 onready var muzzle = $Muzzle
 
 signal spawn_laser(Laser, location)
+signal player_took_damage(hp_left)
 
 func _physics_process(delta):
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -32,5 +33,6 @@ func _on_Player_area_entered(area):
 
 func take_damage(damage_taken):
 	hp -= damage_taken
+	emit_signal("player_took_damage", hp)
 	if hp <= 0:
 		queue_free()

@@ -67,6 +67,7 @@ shape = SubResource( 1 )
 [node name="HUD" parent="." instance=ExtResource( 8 )]
 
 [connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
+[connection signal="player_took_damage" from="Player" to="." method="_on_Player_player_took_damage"]
 [connection signal="spawn_laser" from="Player" to="." method="spawn_laser"]
 [connection signal="spawn_enemy" from="EnemySpawner" to="." method="_on_EnemySpawner_spawn_enemy"]
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_SpawnTimer_timeout"]
