@@ -7,7 +7,7 @@ export (int) var score = 10
 
 onready var hit_sound = $HitSound
 
-signal enemy_died(score)
+signal enemy_died(score, location)
 
 func _physics_process(delta):
 	global_position.y += speed * delta
@@ -21,4 +21,4 @@ func take_damage(damage_taken):
 	hit_sound.play()
 	if hp <= 0:
 		queue_free()
-		emit_signal("enemy_died", score)
+		emit_signal("enemy_died", score, global_position)

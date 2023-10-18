@@ -16,7 +16,7 @@ onready var laser_sound = $LaserSound
 
 signal spawn_laser(Laser, location)
 signal player_took_damage(hp_left)
-signal player_died()
+signal player_died(location)
 
 func _physics_process(delta):
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -41,4 +41,4 @@ func take_damage(damage_taken):
 	hit_sound.play()
 	if hp <= 0:
 		queue_free()
-		emit_signal("player_died")
+		emit_signal("player_died", global_position)

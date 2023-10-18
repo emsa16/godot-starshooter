@@ -5,6 +5,7 @@ var total_score = 0
 onready var hud = $UILayer/HUD
 onready var enemy_spawner = $EnemySpawner
 onready var ui_layer = $UILayer
+onready var explosion_effect = $EffectsLayer/Explosion
 
 var GameOverMenu = preload("res://ui/GameOverMenu.tscn")
 
@@ -28,8 +29,9 @@ func _on_EnemySpawner_spawn_enemy(EnemyScene, location):
 func _on_DeathZone_area_entered(area):
 	area.queue_free()
 
-func _on_enemy_died(score):
+func _on_enemy_died(score, location):
 	update_score_and_hud(total_score + score)
+	create_explosion(location)
 
 func update_score_and_hud(val):
 	total_score = val
@@ -39,13 +41,18 @@ func _on_Player_player_took_damage(hp_left):
 	hud.update_lives(hp_left)
 
 
-func _on_Player_player_died():
-	var timer = get_tree().create_timer(3)
-	yield(timer, "timeout")
+func _on_Player_player_died(location):
+	create_explosion(location)
 	game_over()
 	
 func game_over():
 	enemy_spawner.stop()
+	var timer = get_tree().create_timer(3)
+	yield(timer, "timeout")
 	var game_over_menu = GameOverMenu.instance()
 	ui_layer.add_child(game_over_menu)
 	game_over_menu.update_score(total_score)
+
+func create_explosion(location):
+	explosion_effect.global_position = location
+	explosion_effect.start()
