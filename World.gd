@@ -2,7 +2,11 @@ extends Node2D
 
 var total_score = 0
 
-onready var hud = $HUD
+onready var hud = $UILayer/HUD
+onready var enemy_spawner = $EnemySpawner
+onready var ui_layer = $UILayer
+
+var GameOverMenu = preload("res://ui/GameOverMenu.tscn")
 
 func _ready():
 	update_score_and_hud(0)
@@ -33,3 +37,15 @@ func update_score_and_hud(val):
 	
 func _on_Player_player_took_damage(hp_left):
 	hud.update_lives(hp_left)
+
+
+func _on_Player_player_died():
+	var timer = get_tree().create_timer(3)
+	yield(timer, "timeout")
+	game_over()
+	
+func game_over():
+	enemy_spawner.stop()
+	var game_over_menu = GameOverMenu.instance()
+	ui_layer.add_child(game_over_menu)
+	game_over_menu.update_score(total_score)
