@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/background.png" type="Texture" id=1]
 [ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://World.gd" type="Script" id=5]
 [ext_resource path="res://characters/enemies/ShootingEnemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://characters/enemies/EnemySpawner.gd" type="Script" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 362.5, 10 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 5 )
@@ -46,7 +49,23 @@ position = Vector2( 470, 0 )
 wait_time = 2.0
 autostart = true
 
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2( 265, -217 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2( 9.5, 0 )
+shape = SubResource( 1 )
+
+[node name="DeathZone2" type="Area2D" parent="."]
+position = Vector2( 272, 1071 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone2"]
+position = Vector2( 9.5, 0 )
+shape = SubResource( 1 )
+
 [connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
 [connection signal="spawn_laser" from="Player" to="." method="spawn_laser"]
 [connection signal="spawn_enemy" from="EnemySpawner" to="." method="_on_EnemySpawner_spawn_enemy"]
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_SpawnTimer_timeout"]
+[connection signal="area_entered" from="DeathZone" to="." method="_on_DeathZone_area_entered"]
+[connection signal="area_entered" from="DeathZone2" to="." method="_on_DeathZone_area_entered"]

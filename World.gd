@@ -12,3 +12,7 @@ func _on_EnemySpawner_spawn_enemy(EnemyScene, location):
 	enemy.global_position = location
 	if enemy.has_signal("spawn_laser"):
 		enemy.connect("spawn_laser", self, "spawn_laser")
+
+
+func _on_DeathZone_area_entered(area):
+	area.queue_free()
