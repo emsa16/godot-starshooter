@@ -8,6 +8,7 @@ radius = 40.0
 
 [node name="DiverEnemy" instance=ExtResource( 2 )]
 speed = 600
+score = 25
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2( 0.7, 0.7 )

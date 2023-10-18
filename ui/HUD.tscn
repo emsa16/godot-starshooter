@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://fonts/font_32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://ui/HUD.gd" type="Script" id=2]
+
+[node name="HUD" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -2.0
+margin_bottom = -2.0
+script = ExtResource( 2 )
+
+[node name="ScoreLabel" type="Label" parent="."]
+margin_left = 10.0
+margin_top = 12.0
+margin_right = 168.0
+margin_bottom = 65.0
+custom_fonts/font = ExtResource( 1 )
+text = "Score: 999"
