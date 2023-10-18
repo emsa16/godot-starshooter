@@ -7,7 +7,6 @@ export (int) var damage = 1
 func _physics_process(delta):
 	global_position.y += speed * delta
 
-
 func _on_Enemy_area_entered(area):
 	if area is Player:
 		area.take_damage(damage)
